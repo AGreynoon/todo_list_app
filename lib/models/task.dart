@@ -8,8 +8,4 @@ class Task {
     required this.detail,
     this.isCompleted = false,
   });
-
-  void markAsCompleted() {
-    isCompleted = true;
-  }
 }
