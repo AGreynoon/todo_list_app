@@ -15,8 +15,8 @@ At this point, I'm implementing everything I have learned in this journey.
 ## Design info
 I found this free simple design in Figma community ![LOW CODE TODO LIST APP AESTHETIC](https://www.figma.com/community/file/1301223631360583764) via **gorogurax**, then I have implemented it using Flutter framework.
 
-<img src="https://github.com/AGreynoon/todo_list_app/blob/main/screenshots/TODO_PAGE.png"/> <img src="https://github.com/AGreynoon/todo_list_app/blob/main/screenshots/ADD_TODO.png"/>
-<img src="https://github.com/AGreynoon/todo_list_app/blob/main/screenshots/EDIT_TODO.png"/> <img src="https://github.com/AGreynoon/todo_list_app/blob/main/screenshots/COMPLETED_TASK.png"/>
+<img src="https://github.com/AGreynoon/todo_list_app/blob/main/screenshots/TODO_PAGE.png" width="250" height="500"/> <img src="https://github.com/AGreynoon/todo_list_app/blob/main/screenshots/ADD_TODO.png" width="250" height="500"/>
+<img src="https://github.com/AGreynoon/todo_list_app/blob/main/screenshots/EDIT_TODO.png" width="250" height="500"/> <img src="https://github.com/AGreynoon/todo_list_app/blob/main/screenshots/COMPLETED_TASK.png" width="250" height="500"/>
 
 ## Installation:
 1. Clone this repository.
