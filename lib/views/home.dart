@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list_app/models/task_manager.dart';
 import 'package:todo_list_app/views/all_tasks.dart';
 import 'package:todo_list_app/views/completed_task.dart';
 
@@ -10,14 +11,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static List<Widget> pages = [
-    /*AllTasks(
-      taskManager: null,
-    ),
-    CompletedTask(
-      taskManager: null,
-    ),*/
-  ];
+  late TaskManager taskManager;
+
+  @override
+  void initState() {
+    super.initState();
+    taskManager = TaskManager();
+    taskManager.uncompletedTasks;
+    taskManager.completedTasks;
+  }
+
+  List<Widget> get pages => [
+        AllTasks(taskManager: taskManager),
+        CompletedTask(taskManager: taskManager),
+      ];
+
   int currentPageIndex = 0;
 
   @override

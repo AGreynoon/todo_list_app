@@ -4,7 +4,7 @@ import 'package:todo_list_app/widgets/completed_task_card.dart';
 
 class CompletedTask extends StatefulWidget {
   final TaskManager taskManager;
-  const CompletedTask({required this.taskManager, super.key});
+  CompletedTask({required this.taskManager, super.key});
 
   @override
   State<CompletedTask> createState() => _CompletedTaskState();
