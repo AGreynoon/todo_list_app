@@ -7,12 +7,16 @@ class CompletedTask extends StatefulWidget {
   CompletedTask({required this.taskManager, super.key});
 
   @override
-  State<CompletedTask> createState() => _CompletedTaskState();
+  State<CompletedTask> createState() {
+    debugPrint('CompletedTask createState runs');
+    return _CompletedTaskState();
+  }
 }
 
 class _CompletedTaskState extends State<CompletedTask> {
   @override
   Widget build(BuildContext context) {
+    debugPrint('CompletedTask createState runs');
     return Scaffold(
       backgroundColor: const Color(0xFFD6D7EF),
       appBar: AppBar(

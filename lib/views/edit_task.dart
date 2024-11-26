@@ -7,16 +7,36 @@ class EditTask extends StatefulWidget {
   const EditTask({required this.onChange, required this.task, super.key});
 
   @override
-  State<EditTask> createState() => _EditTaskState();
+  State<EditTask> createState() {
+    debugPrint('EditTask createState runs');
+    return _EditTaskState();
+  }
 }
 
 class _EditTaskState extends State<EditTask> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController titleController = TextEditingController();
-  final TextEditingController detailController = TextEditingController();
+  late TextEditingController titleController;
+  late TextEditingController detailController;
+
+  @override
+  void initState() {
+    debugPrint('EditTask initState runs');
+    titleController = TextEditingController(text: widget.task.title);
+    detailController = TextEditingController(text: widget.task.detail);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    debugPrint('EditTask dispose runs');
+    titleController.dispose();
+    detailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('EditTask build runs');
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -89,17 +109,14 @@ class _EditTaskState extends State<EditTask> {
                           minimumSize: const Size(170, 65),
                         ),
                         onPressed: () {
+                          debugPrint('EditTask ElevatedButton runs');
                           if (_formKey.currentState!.validate()) {
-                            setState(() {
-                              final updateTask = Task(
-                                title: titleController.text,
-                                detail: detailController.text,
-                              );
-                              widget.onChange(updateTask);
-                              Navigator.of(context).pop();
-                              titleController.clear();
-                              detailController.clear();
-                            });
+                            final updateTask = Task(
+                              title: titleController.text,
+                              detail: detailController.text,
+                            );
+                            widget.onChange(updateTask);
+                            Navigator.of(context).pop();
                           }
                         },
                         child: const Text(
@@ -120,8 +137,7 @@ class _EditTaskState extends State<EditTask> {
                         minimumSize: const Size(170, 65),
                       ),
                       onPressed: () {
-                        titleController.clear();
-                        detailController.clear();
+                        debugPrint('EditTask ElevatedButton runs');
                         Navigator.of(context).pop();
                       },
                       child: const Text(

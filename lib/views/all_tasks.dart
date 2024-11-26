@@ -9,12 +9,16 @@ class AllTasks extends StatefulWidget {
   const AllTasks({required this.taskManager, super.key});
 
   @override
-  State<AllTasks> createState() => _AllTasksState();
+  State<AllTasks> createState() {
+    debugPrint('AllTasks createState runs');
+    return _AllTasksState();
+  }
 }
 
 class _AllTasksState extends State<AllTasks> {
   @override
   Widget build(BuildContext context) {
+    debugPrint('AllTasks build runs');
     return Scaffold(
         backgroundColor: const Color(0xFFD6D7EF),
         appBar: AppBar(
@@ -46,6 +50,7 @@ class _AllTasksState extends State<AllTasks> {
               task: widget.taskManager.uncompletedTasks[index],
               onComplete: () {
                 setState(() {
+                  debugPrint('Task marks as complete');
                   widget.taskManager.markTaskAsCompleted(index);
                 });
               },
@@ -56,6 +61,7 @@ class _AllTasksState extends State<AllTasks> {
                         task: widget.taskManager.uncompletedTasks[index],
                         onChange: (updatedTask) {
                           setState(() {
+                            debugPrint('Task has updated');
                             widget.taskManager.updateTask(index, updatedTask);
                           });
                         }),
@@ -64,6 +70,7 @@ class _AllTasksState extends State<AllTasks> {
               },
               onDelete: () {
                 setState(() {
+                  debugPrint('Task has deleted');
                   widget.taskManager.deleteTask(index);
                 });
               },
@@ -73,12 +80,14 @@ class _AllTasksState extends State<AllTasks> {
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color(0xFF9395D3),
           onPressed: () {
+            debugPrint('AllTasks floatingActionButton runs');
             Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => AddTask(
                     onSave: (newTask) {
                       setState(() {
+                        debugPrint('NewTask was added');
                         widget.taskManager.addTask(newTask);
                       });
                     },

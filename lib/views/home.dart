@@ -7,7 +7,10 @@ class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
-  State<Home> createState() => _HomeState();
+  State<Home> createState() {
+    debugPrint('home createState runs');
+    return _HomeState();
+  }
 }
 
 class _HomeState extends State<Home> {
@@ -15,6 +18,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    debugPrint('home initState runs');
     super.initState();
     taskManager = TaskManager();
     taskManager.uncompletedTasks;
@@ -30,12 +34,14 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('home build runs');
     return Scaffold(
       backgroundColor: const Color(0xFFD6D7EF),
       body: pages.elementAt(currentPageIndex),
       bottomNavigationBar: BottomNavigationBar(
           onTap: (index) {
             setState(() {
+              debugPrint('home setState runs');
               currentPageIndex = index;
             });
           },

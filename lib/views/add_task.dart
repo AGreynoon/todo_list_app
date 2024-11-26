@@ -6,7 +6,10 @@ class AddTask extends StatefulWidget {
   const AddTask({required this.onSave, super.key});
 
   @override
-  State<AddTask> createState() => _AddtaskState();
+  State<AddTask> createState() {
+    debugPrint('AddTask createState runs');
+    return _AddtaskState();
+  }
 }
 
 class _AddtaskState extends State<AddTask> {
@@ -15,7 +18,16 @@ class _AddtaskState extends State<AddTask> {
   final TextEditingController detailController = TextEditingController();
 
   @override
+  void dispose() {
+    debugPrint('AddTask dispose runs');
+    titleController.dispose();
+    detailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    debugPrint('AddTask build runs');
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -85,17 +97,14 @@ class _AddtaskState extends State<AddTask> {
                       minimumSize: const Size(380, 65),
                     ),
                     onPressed: () {
+                      debugPrint('AddTask ElevatedButton runs');
                       if (_formKey.currentState!.validate()) {
-                        setState(() {
-                          final newTask = Task(
-                            title: titleController.text,
-                            detail: detailController.text,
-                          );
-                          widget.onSave(newTask);
-                          Navigator.of(context).pop();
-                          titleController.clear();
-                          detailController.clear();
-                        });
+                        final newTask = Task(
+                          title: titleController.text,
+                          detail: detailController.text,
+                        );
+                        widget.onSave(newTask);
+                        Navigator.of(context).pop();
                       }
                     },
                     child: const Text(
