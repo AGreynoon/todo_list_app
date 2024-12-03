@@ -1,42 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list_app/models/task.dart';
+import 'package:todo_list_app/models/task_manager.dart';
 
-class EditTask extends StatefulWidget {
-  final Function(Task) onChange;
+class EditTask extends StatelessWidget {
   final Task task;
-  const EditTask({required this.onChange, required this.task, super.key});
-
-  @override
-  State<EditTask> createState() {
-    debugPrint('EditTask createState runs');
-    return _EditTaskState();
-  }
-}
-
-class _EditTaskState extends State<EditTask> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController titleController;
-  late TextEditingController detailController;
-
-  @override
-  void initState() {
-    debugPrint('EditTask initState runs');
-    titleController = TextEditingController(text: widget.task.title);
-    detailController = TextEditingController(text: widget.task.detail);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    debugPrint('EditTask dispose runs');
-    titleController.dispose();
-    detailController.dispose();
-    super.dispose();
-  }
+  late final TextEditingController titleController =
+      TextEditingController(text: task.title);
+  late final TextEditingController detailController =
+      TextEditingController(text: task.detail);
+  EditTask({required this.task, super.key});
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('EditTask build runs');
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -109,13 +86,21 @@ class _EditTaskState extends State<EditTask> {
                           minimumSize: const Size(170, 65),
                         ),
                         onPressed: () {
-                          debugPrint('EditTask ElevatedButton runs');
                           if (_formKey.currentState!.validate()) {
                             final updateTask = Task(
                               title: titleController.text,
                               detail: detailController.text,
                             );
-                            widget.onChange(updateTask);
+                            final index = context
+                                .read<TaskManager>()
+                                .uncompletedTasks
+                                .indexOf(task);
+                            context
+                                .read<TaskManager>()
+                                .updateTask(index, updateTask);
+
+                            titleController.clear();
+                            detailController.clear();
                             Navigator.of(context).pop();
                           }
                         },
@@ -136,10 +121,7 @@ class _EditTaskState extends State<EditTask> {
                         elevation: 6,
                         minimumSize: const Size(170, 65),
                       ),
-                      onPressed: () {
-                        debugPrint('EditTask ElevatedButton runs');
-                        Navigator.of(context).pop();
-                      },
+                      onPressed: () => Navigator.of(context).pop(),
                       child: const Text(
                         'Cancel',
                         style: TextStyle(

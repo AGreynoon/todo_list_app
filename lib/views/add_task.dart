@@ -1,33 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_list_app/models/task.dart';
+import 'package:todo_list_app/models/task_manager.dart';
 
-class AddTask extends StatefulWidget {
-  final Function(Task) onSave;
-  const AddTask({required this.onSave, super.key});
+class AddTask extends StatelessWidget {
+  AddTask({super.key});
 
-  @override
-  State<AddTask> createState() {
-    debugPrint('AddTask createState runs');
-    return _AddtaskState();
-  }
-}
-
-class _AddtaskState extends State<AddTask> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController detailController = TextEditingController();
 
   @override
-  void dispose() {
-    debugPrint('AddTask dispose runs');
-    titleController.dispose();
-    detailController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    debugPrint('AddTask build runs');
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -97,13 +81,14 @@ class _AddtaskState extends State<AddTask> {
                       minimumSize: const Size(380, 65),
                     ),
                     onPressed: () {
-                      debugPrint('AddTask ElevatedButton runs');
                       if (_formKey.currentState!.validate()) {
                         final newTask = Task(
                           title: titleController.text,
                           detail: detailController.text,
                         );
-                        widget.onSave(newTask);
+                        context.read<TaskManager>().addTask(newTask);
+                        titleController.clear();
+                        detailController.clear();
                         Navigator.of(context).pop();
                       }
                     },

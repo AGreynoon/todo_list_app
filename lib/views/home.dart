@@ -1,52 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list_app/models/task_manager.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_list_app/models/pages_provider.dart';
 import 'package:todo_list_app/views/all_tasks.dart';
 import 'package:todo_list_app/views/completed_task.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget {
   const Home({super.key});
 
-  @override
-  State<Home> createState() {
-    debugPrint('home createState runs');
-    return _HomeState();
-  }
-}
-
-class _HomeState extends State<Home> {
-  late TaskManager taskManager;
-
-  @override
-  void initState() {
-    debugPrint('home initState runs');
-    super.initState();
-    taskManager = TaskManager();
-    taskManager.uncompletedTasks;
-    taskManager.completedTasks;
-  }
-
   List<Widget> get pages => [
-        AllTasks(taskManager: taskManager),
-        CompletedTask(taskManager: taskManager),
+        const AllTasks(),
+        const CompletedTask(),
       ];
-
-  int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('home build runs');
+    final pagesProvider = Provider.of<PagesProvider>(context);
+
     return Scaffold(
       backgroundColor: const Color(0xFFD6D7EF),
-      body: pages.elementAt(currentPageIndex),
+      body: pages.elementAt(pagesProvider.currentPageIndex),
       bottomNavigationBar: BottomNavigationBar(
           onTap: (index) {
-            setState(() {
-              debugPrint('home setState runs');
-              currentPageIndex = index;
-            });
+            pagesProvider.updatePage(index);
           },
           backgroundColor: const Color(0xFFFFFFFF),
-          currentIndex: currentPageIndex,
+          currentIndex: pagesProvider.currentPageIndex,
           selectedItemColor: const Color(0xFF9395D3),
           items: const [
             BottomNavigationBarItem(
